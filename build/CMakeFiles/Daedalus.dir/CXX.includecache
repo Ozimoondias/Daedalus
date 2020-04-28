@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/main.hpp
+SFML/Graphics.hpp
+-
+
+/home/agar/Project/Daedalus/src/main.cpp
+main.hpp
+/home/agar/Project/Daedalus/src/main.hpp
+
