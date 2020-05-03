@@ -6,7 +6,7 @@ set(EXECUTABLE_NAME "Daedalus")
 
 include_directories(include)
 
-file(GLOB_RECURSE SOURCES src/*.cpp)
+file(GLOB_RECURSE SOURCES src/*)
 add_executable(${EXECUTABLE_NAME} ${SOURCES})
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
