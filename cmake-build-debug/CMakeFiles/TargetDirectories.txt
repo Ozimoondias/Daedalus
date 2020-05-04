@@ -1,0 +1,3 @@
+/home/agar/Project/Daedalus/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/agar/Project/Daedalus/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/agar/Project/Daedalus/cmake-build-debug/CMakeFiles/Daedalus.dir

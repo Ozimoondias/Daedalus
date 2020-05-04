@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/game.hpp
+iostream
+-
+map.hpp
+-
+player.hpp
+-
+
+../include/map.hpp
+array
+-
+
+../include/player.hpp
+SFML/Graphics.hpp
+-
+
+/home/agar/Project/Daedalus/src/game.cpp
+game.hpp
+-
+
+/home/agar/Project/Daedalus/src/main.cpp
+game.hpp
+-
+

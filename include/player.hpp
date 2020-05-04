@@ -9,8 +9,8 @@
 
 struct      Player
 {
-    sf::Vector2f    position_ {5, 5};
-    sf::Vector2f    direction_ {1, 0};
+    sf::Vector2f    position_ {2, 2};
+    sf::Vector2f    direction_ {0, 1};
     sf::Vector2f    camera_ {0, 0.66};
 
     void    m_forward();
