@@ -9,6 +9,8 @@
 ../include/game.hpp
 iostream
 -
+cmath
+-
 map.hpp
 -
 player.hpp
@@ -20,10 +22,6 @@ array
 
 ../include/player.hpp
 SFML/Graphics.hpp
--
-
-/home/agar/Project/Daedalus/src/game.cpp
-game.hpp
 -
 
 /home/agar/Project/Daedalus/src/main.cpp

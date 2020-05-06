@@ -14,37 +14,37 @@ int main()
     Player      player;
     Map         map;
 
-    /*
-    map.draw(player.position_.x, player.position_.y);
-    test_forward(map, player);
-    map.draw(player.position_.x, player.position_.y);
-    test_forward(map, player);
-    map.draw(player.position_.x, player.position_.y);
-    test_backward(map, player);
-    map.draw(player.position_.x, player.position_.y);
-    test_backward(map, player);
-    map.draw(player.position_.x, player.position_.y);
-     */
-
-    sf::VertexArray lines(sf::Lines, screenW);
-
-    for (int i = 0; i < screenW; i++)
-    {
-        lines.append(sf::Vertex(sf::Vector2f(i, 0), sf::Color::Cyan));
-        lines.append(sf::Vertex(sf::Vector2f(i, 600), sf::Color::Cyan));
-    }
-
     while (window.isOpen())
     {
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
                 window.close();
-
-            window.clear();
-            window.draw(lines);
-            window.display();
+            if (event.type == sf::Event::KeyPressed)
+                if (event.key.code == sf::Keyboard::Escape)
+                    window.close();
         }
+
+        test_mouse(map, player, window);
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+            test_forward(map, player);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+            test_backward(map, player);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+            test_right(map, player);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+            test_left(map, player);
+
+        sf::VertexArray lines(sf::Lines, screenW);
+
+        window.clear();
+
+        draw(lines, player, map);
+        window.draw(lines);
+
+        window.display();
+
     }
 
     return 0;
