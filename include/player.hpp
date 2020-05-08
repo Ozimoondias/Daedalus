@@ -9,7 +9,7 @@
 
 struct      Player
 {
-    sf::Vector2f    position_ {2, 2};
+    sf::Vector2f    position_ {22, 11.5};//{2, 2};
     sf::Vector2f    direction_ {1, 0};
     sf::Vector2f    camera_ {0, -0.60};
     sf::Vector2f    speed_ {0.05, 0.01};
