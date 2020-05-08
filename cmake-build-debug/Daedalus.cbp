@@ -90,9 +90,6 @@
 		<Unit filename="/home/agar/Project/Daedalus/src/main.cpp">
 			<Option target="Daedalus"/>
 		</Unit>
-		<Unit filename="/home/agar/Project/Daedalus/src/map.cpp~">
-			<Option target="Daedalus"/>
-		</Unit>
 		<Unit filename="/home/agar/Project/Daedalus/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

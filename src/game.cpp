@@ -4,69 +4,48 @@
 
 #include <game.hpp>
 
-void        test_forward(const Map& map, Player& player)
+void        k_forward_backward(const Map& map, Player& player,
+        const int& dir)
 {
-    if (map.check(player.position_.x + player.direction_.x * 0.05,
+    float   mov_speed = player.speed_.x * dir;
+
+    if (map.check(player.position_.x + player.direction_.x * mov_speed,
             player.position_.y))
-        player.position_.x += player.direction_.x * 0.05;
+        player.position_.x += player.direction_.x * mov_speed;
     if (map.check(player.position_.x,
-            player.position_.y + player.direction_.y * 0.05))
-        player.position_.y += player.direction_.y * 0.05;
+            player.position_.y + player.direction_.y * mov_speed))
+        player.position_.y += player.direction_.y * mov_speed;
 }
 
-void        test_backward(const Map& map, Player& player)
+void        k_right_left(const Map& map, Player& player,
+        const int& dir)
 {
-    if (map.check(player.position_.x - player.direction_.x * 0.05,
+    float   mov_speed = player.speed_.x * dir;
+
+    if (map.check(player.position_.x + player.camera_.x * mov_speed,
             player.position_.y))
-        player.position_.x -= player.direction_.x * 0.05;
+        player.position_.x += player.camera_.x * mov_speed;
     if (map.check(player.position_.x,
-            player.position_.y - player.direction_.y * 0.05))
-        player.position_.y -= player.direction_.y * 0.05;
+            player.position_.y + player.camera_.y * mov_speed))
+        player.position_.y += player.camera_.y * mov_speed;
 }
 
-void        test_right(const Map& map, Player& player)
+void        m_right_left(const Map& map, Player& player,
+        const int& dir)
 {
-    if (map.check(player.position_.x + player.camera_.x * 0.05,
-            player.position_.y))
-        player.position_.x += player.camera_.x * 0.05;
-    if (map.check(player.position_.x,
-            player.position_.y + player.camera_.y * 0.05))
-        player.position_.y += player.camera_.y * 0.05;
-}
+    float   rot_speed = player.speed_.y * dir;
+    double  old_dir = player.direction_.x;
+    double  old_cam = player.camera_.x;
 
-void        test_left(const Map& map, Player& player)
-{
-    if (map.check(player.position_.x - player.camera_.x * 0.05,
-            player.position_.y))
-        player.position_.x -= player.camera_.x * 0.05;
-    if (map.check(player.position_.x,
-            player.position_.y - player.camera_.y * 0.05))
-        player.position_.y -= player.camera_.y * 0.05;
-}
+    player.direction_.x = player.direction_.x * std::cos(rot_speed)
+            - player.direction_.y * std::sin(rot_speed);
+    player.direction_.y = old_dir * std::sin(rot_speed)
+            + player.direction_.y * std::cos(rot_speed);
 
-void        test_mouse(const Map& map, Player& player, const sf::RenderWindow& window)
-{
-    sf::Vector2i position = sf::Mouse::getPosition(window);
-    float   xxx = position.x - screenW/2;
-    sf::Mouse::setPosition(sf::Vector2i(screenW/2, screenH/2), window);
-
-    if (xxx != 0)
-    {
-        xxx /= 1000;
-
-        double odx = player.direction_.x;
-        double ocx = player.camera_.x;
-
-        player.direction_.x = player.direction_.x * std::cos(xxx)
-                - player.direction_.y * std::sin(xxx);
-        player.direction_.y = odx * std::sin(xxx)
-                + player.direction_.y * std::cos(xxx);
-
-        player.camera_.x = player.camera_.x * std::cos(xxx)
-                - player.camera_.y * std::sin(xxx);
-        player.camera_.y = ocx * std::sin(xxx)
-                + player.camera_.y * std::cos(xxx);
-    }
+    player.camera_.x = player.camera_.x * std::cos(rot_speed)
+            - player.camera_.y * std::sin(rot_speed);
+    player.camera_.y = old_cam * std::sin(rot_speed)
+            + player.camera_.y * std::cos(rot_speed);
 }
 
 void        draw(sf::VertexArray& lines,
@@ -99,27 +78,27 @@ void        draw(sf::VertexArray& lines,
 
         if (rdirX < 0)
         {
-            //std::cout << "if 1" << std::endl;
             stepX = -1;
-            sideDistX = (player.position_.x - mapX) * deltaDistX;
+            sideDistX = (player.position_.x - mapX)
+                    * deltaDistX;
         }
         else
         {
-            //std::cout << "else 1" << std::endl;
             stepX = 1;
-            sideDistX = (mapX + 1.0 - player.position_.x) * deltaDistX;
+            sideDistX = (mapX + 1.0 - player.position_.x)
+                    * deltaDistX;
         }
         if (rdirY < 0)
         {
-            //std::cout << "if 2" << std::endl;
             stepY = -1;
-            sideDistY = (player.position_.y - mapY) * deltaDistY;
+            sideDistY = (player.position_.y - mapY)
+                    * deltaDistY;
         }
         else
         {
-            //std::cout << "else 2" << std::endl;
             stepY = 1;
-            sideDistY = (mapY + 1.0 - player.position_.y) * deltaDistY;
+            sideDistY = (mapY + 1.0 - player.position_.y)
+                    * deltaDistY;
         }
 
         while (hit == 0)
@@ -141,10 +120,11 @@ void        draw(sf::VertexArray& lines,
             //std::cout << "hit " << hit << std::endl;
         }
 
-        if (side == 0)
-            perpWallDist = (mapX - player.position_.x + (1 - stepX) / 2) / rdirX;
-        else
-            perpWallDist = (mapY - player.position_.y + (1 - stepY) / 2) / rdirY;
+        perpWallDist = (side == 0)
+                ? ((float)mapX - player.position_.x
+                    + (float)(1 - stepX) / 2) / rdirX
+                : ((float)mapY - player.position_.y
+                    + (float)(1 - stepY) / 2) / rdirY;
 
         int lineHeight = (int)(screenH / perpWallDist);
 
@@ -152,11 +132,24 @@ void        draw(sf::VertexArray& lines,
         if (drawS < 0)
             drawS = 0;
         int drawE = lineHeight / 2 + screenH / 2;
-        if (drawE >= screenH)
-            drawE = screenH - 1;
+        if (drawE > screenH)
+            drawE = screenH;
 
-        lines.append(sf::Vertex(sf::Vector2f(x, drawS), sf::Color::Cyan));
+        int ceilingPixel = 0;
+        int groundPixel = screenH;
+
+        lines.append(sf::Vertex(sf::Vector2f(x, ceilingPixel), sf::Color::Cyan));
+        ceilingPixel = int(-lineHeight * (1.0 - 0.6) + screenH * 0.5f);
+        lines.append(sf::Vertex(sf::Vector2f(x, ceilingPixel), sf::Color::Cyan));
+
+        lines.append(sf::Vertex(sf::Vector2f(x, groundPixel), sf::Color::Green));
+        groundPixel = int(lineHeight * (1.0 - 0.6) + screenH * 0.5f);
+        lines.append(sf::Vertex(sf::Vector2f(x, groundPixel), sf::Color::Green));
+
+        lines.append(sf::Vertex(sf::Vector2f(x, drawS), sf::Color::Red));
         lines.append(sf::Vertex(sf::Vector2f(x, drawE), sf::Color::Red));
+
+        
 
         //std::cout << " rdirX " << mapX << " rdirY " << mapY << std::endl;
     }

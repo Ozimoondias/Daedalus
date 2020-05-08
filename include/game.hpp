@@ -11,15 +11,15 @@
 #include    <map.hpp>
 #include    <player.hpp>
 
-#define     screenW	1920
-#define		screenH	1080
+#define     screenW 1920//720
+#define		screenH 1080//480
 
-void        test_forward(const Map&, Player&);
-void        test_backward(const Map&, Player&);
-void        test_right(const Map&, Player&);
-void        test_left(const Map&, Player&);
-
-void        test_mouse(const Map&, Player&, const sf::RenderWindow&);
+void        k_forward_backward(const Map&, Player&,
+        const int&);
+void        k_right_left(const Map&, Player&,
+        const int&);
+void        m_right_left(const Map&, Player&,
+        const int&);
 
 void        draw(sf::VertexArray&, const Player&, const Map&);
 

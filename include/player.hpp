@@ -11,14 +11,8 @@ struct      Player
 {
     sf::Vector2f    position_ {2, 2};
     sf::Vector2f    direction_ {1, 0};
-    sf::Vector2f    camera_ {0, 0.66};
-
-
-    void    m_forward();
-    void    m_backward();
-    void    s_right();
-    void    s_left();
-
+    sf::Vector2f    camera_ {0, -0.60};
+    sf::Vector2f    speed_ {0.05, 0.01};
 };
 
 inline  std::ostream& operator<<(std::ostream& os,
@@ -39,6 +33,7 @@ inline  std::ostream& operator<<(std::ostream& os,
     << " position_ " << player.position_
     << " direction_ " << player.direction_
     << " camera_ " << player.camera_
+    << " speed_ " << player.speed_
     << std::endl;
 
     return os;

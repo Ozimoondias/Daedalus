@@ -8,11 +8,13 @@ int main()
 {
 
     sf::RenderWindow    window(sf::VideoMode(screenW, screenH),
-            "Daedalus");
+            "Daedalus");//, sf::Style::Fullscreen);
     sf::Event   event;
 
     Player      player;
     Map         map;
+
+    int ii = 0;
 
     while (window.isOpen())
     {
@@ -25,16 +27,20 @@ int main()
                     window.close();
         }
 
-        test_mouse(map, player, window);
-
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
-            test_forward(map, player);
+            k_forward_backward(map, player, 1);
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-            test_backward(map, player);
+            k_forward_backward(map, player, -1);
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-            test_right(map, player);
+            k_right_left(map, player, 1);
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-            test_left(map, player);
+            k_right_left(map, player, -1);
+
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+            m_right_left(map, player, 1);
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+            m_right_left(map, player, -1);
 
         sf::VertexArray lines(sf::Lines, screenW);
 
