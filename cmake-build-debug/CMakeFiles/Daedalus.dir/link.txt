@@ -1,1 +1,0 @@
-/usr/bin/c++  -g   CMakeFiles/Daedalus.dir/src/game.cpp.o CMakeFiles/Daedalus.dir/src/main.cpp.o  -o Daedalus  /usr/lib/libsfml-network.so /usr/lib/libsfml-audio.so /usr/lib/libsfml-graphics.so /usr/lib/libsfml-window.so /usr/lib/libsfml-system.so 
